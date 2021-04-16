@@ -36,4 +36,27 @@ class Clock {
 
 }
 
-const clock = new Clock();
+// const clock = new Clock();
+
+const readline = require("readline");
+const reader = readline.createInterface({
+    input: process.stdin,
+    output: process.stdout
+});
+
+function addNumbers(sum, numsLeft, completionCallback) {
+    if (numsLeft > 0) {
+        reader.question('Input a number: ', function(numStr) {
+            let numInt = parseInt(numStr);
+            sum += numInt;
+            console.log(sum);
+            numsLeft--;
+            addNumbers(sum, numsLeft, completionCallback);
+        })
+    } else if (numsLeft === 0) {
+        completionCallback(sum);
+        reader.close();
+    }
+}
+
+addNumbers(0, 3, sum => console.log(`Total Sum: ${sum}`));
